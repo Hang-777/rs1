@@ -191,3 +191,15 @@ async function init() {
   try { const r = await fetch('/api/status'); if (!r.ok) throw new Error('AI 接口未配置'); const d = await r.json(); backendMode = d.mode; $('#modeBadge').textContent = d.mode === 'mock' ? '✦ 本地模式 · 内容仅在本机' : '✦ AI 表达建议已连接'; $('#modeBadge').classList.add(d.mode); } catch { backendMode = 'mock'; $('#modeBadge').textContent = '✦ 分享版 · 本地模式'; $('#modeBadge').classList.add('mock'); }
 }
 init();
+
+// The archive is a navigation layer; all editing continues in the original workspace.
+function enterArchiveRoom(room) {
+  if (room === 'home') { document.body.classList.add('archive-home'); window.scrollTo(0, 0); return; }
+  document.body.classList.remove('archive-home');
+  if (room === 'resume') { openResume(); return; }
+  const target = document.querySelector({goal:'.goal-card', interview:'.interview-card', profile:'.profile-card'}[room] || '.workspace');
+  target.scrollIntoView({block:'start', behavior:'instant'});
+  target.setAttribute('tabindex','-1'); target.focus({preventScroll:true});
+}
+document.querySelectorAll('[data-room]').forEach(button => button.addEventListener('click', () => enterArchiveRoom(button.dataset.room)));
+document.querySelector('.brand').addEventListener('click', event => { event.preventDefault(); enterArchiveRoom('home'); });
