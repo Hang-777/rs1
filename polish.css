@@ -1,0 +1,243 @@
+:root {
+  --ink: #24332b;
+  --muted: #7e8980;
+  --paper: #fffefa;
+  --base: #f4f2eb;
+  --line: #e8e5db;
+  --green: #315c47;
+  --green-soft: #e7eee6;
+  --orange: #b76d4c;
+  --orange-soft: #f4e8dc;
+  --shadow: 0 12px 36px rgba(47, 56, 45, .07);
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 72% 9%, rgba(221, 213, 187, .19), transparent 27rem),
+    var(--base);
+  color: var(--ink);
+  letter-spacing: -.012em;
+}
+
+.topbar {
+  height: 74px;
+  padding-inline: max(calc((100vw - 1360px) / 2), 4.2vw);
+  background: rgba(250, 249, 244, .89);
+  border-bottom: 1px solid rgba(220, 220, 207, .72);
+  backdrop-filter: blur(12px);
+}
+
+.brand { gap: 13px; font-size: 16px; letter-spacing: .06em; }
+.brand small { letter-spacing: .13em; }
+.brand-mark {
+  width: 39px;
+  height: 39px;
+  border-radius: 13px 13px 13px 4px;
+  background: var(--green);
+  box-shadow: 0 4px 9px rgba(49, 92, 71, .15);
+}
+.mode-badge { background: #fffefa; border-color: #e7e5da; padding: 7px 12px; }
+
+.layout { max-width: 1360px; grid-template-columns: 220px minmax(0, 1fr); }
+.sidebar {
+  padding: 42px 21px 27px 26px;
+  border-right-color: #e5e3d9;
+  background: linear-gradient(180deg, rgba(248, 247, 241, .65), rgba(244, 242, 235, 0));
+}
+.side-heading { font-size: 11px; color: #677369; letter-spacing: .1em; text-transform: uppercase; }
+.side-heading span { color: #b98c57; }
+.steps { margin-top: 32px; gap: 9px; }
+.step { gap: 11px; padding: 10px 7px; font-size: 12px; }
+.step i { border-color: #e1e3d9; background: #f8f7f2; }
+.step.active { color: #2e5944; }
+.step.active i { box-shadow: 0 0 0 4px rgba(63, 107, 79, .09); }
+.sidebar-note {
+  position: relative;
+  margin-top: 48px;
+  padding: 17px 15px 18px;
+  border: 1px solid #e0e4d8;
+  background: linear-gradient(150deg, #edf0e6, #f3f2e8);
+  border-radius: 5px 15px 15px 15px;
+  color: #526556;
+}
+.sidebar-note > span { color: #a9784d; }
+.privacy-mini { font-size: 10px; letter-spacing: .01em; }
+
+.workspace { max-width: 1060px; padding: 38px 34px 30px; }
+.welcome-line { color: #778176; font-size: 11px; letter-spacing: .035em; }
+.welcome-line span:first-child::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 8px 1px 0;
+  background: #8aab87;
+  border-radius: 50%;
+}
+.workspace h1 {
+  margin-top: 22px;
+  color: #26392d;
+  font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+  font-size: clamp(31px, 3.1vw, 43px);
+  line-height: 1.35;
+  letter-spacing: .035em;
+}
+.intro { max-width: 550px; margin: 9px 0 30px; color: #78837a; font-size: 13px; line-height: 1.9; }
+
+.goal-card, .interview-card, .profile-card, .resume-section {
+  border: 1px solid #e9e6dc;
+  border-radius: 13px;
+  box-shadow: 0 9px 28px rgba(48, 54, 43, .045);
+}
+.goal-card { padding: 24px 25px 22px; background: rgba(255, 254, 250, .93); }
+.section-head h2, .dialog-head h2 {
+  color: #2d3d32;
+  font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+  font-size: 19px;
+  letter-spacing: .015em;
+}
+.eyebrow { color: #9a8e78; font-size: 9px; letter-spacing: .16em; }
+.head-icon { width: 34px; height: 34px; background: #eef0e8; color: #63806a; }
+.head-icon.warm { background: #f5ebe1; color: #ac704f; }
+
+.job-grid { gap: 8px; margin-top: 20px; }
+.job-button {
+  min-height: 46px;
+  padding-inline: 11px;
+  border-color: #e9e7dd;
+  border-radius: 7px;
+  background: #fffefa;
+  color: #667167;
+  font-size: 11px;
+  transition: transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease;
+}
+.job-button:hover { transform: translateY(-1px); border-color: #adbea9; box-shadow: 0 4px 12px rgba(49, 76, 54, .06); }
+.job-button.selected { border-color: #66856a; background: #edf2e9; color: #315841; box-shadow: inset 0 0 0 1px rgba(84, 120, 84, .12); }
+.custom-label { margin-top: 17px; color: #7f897f; }
+.text-input { background: #fffefa; border-color: #e9e7dd; border-radius: 7px; padding: 11px 12px; }
+.text-input::placeholder, textarea::placeholder, .form-grid input::placeholder { color: #b0b5ae; }
+
+.content-grid { gap: 16px; margin-top: 17px; align-items: stretch; }
+.interview-card {
+  min-height: 326px;
+  padding: 23px 24px;
+  border-color: #315c47;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(152, 174, 133, .22), transparent 15rem),
+    linear-gradient(145deg, #315c47, #294c3c 80%);
+  color: #f9f7ef;
+  box-shadow: 0 14px 32px rgba(41, 76, 60, .16);
+}
+.interview-card .eyebrow { color: #c5cbb7; }
+.interview-card .section-head h2, .interview-card .interview-active h3, .interview-card .interview-done h3 { color: #fbf9f1; }
+.interview-card .count-pill { border-color: rgba(239, 241, 224, .22); color: #e0e4d6; background: rgba(255,255,255,.055); }
+.interview-card .sparkle { background: rgba(255, 255, 255, .12); color: #ebd39a; }
+.interview-idle { padding-top: 30px; }
+.interview-idle p, .interview-done p { color: #d5ded3; line-height: 2; }
+.interview-card .primary-button {
+  border-color: #ead19a;
+  background: #ead19a;
+  color: #304333;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(20, 37, 25, .11);
+}
+.interview-card .primary-button:hover { border-color: #f3dfb4; background: #f3dfb4; }
+.interview-card .outline-button { border-color: rgba(237, 239, 222, .55); background: transparent; color: #f1f0e6; }
+.interview-card .outline-button:hover { background: rgba(255,255,255,.09); }
+.interview-card .question-number, .interview-card .question-hint { color: #c6d1c5; }
+.interview-card .interview-active textarea {
+  min-height: 102px;
+  border-color: rgba(255,255,255,.5);
+  background: #fffefa;
+  color: #29392f;
+  border-radius: 8px;
+}
+.interview-card .answer-foot { color: #c8d2c7; }
+.interview-card .quiet-button { color: #d9e0d6; }
+.interview-card .quiet-button:hover { color: #f4d894; }
+.experience-list-heading { color: #d5ded3; }
+.experience-chip { border-color: rgba(240, 240, 224, .16); }
+.experience-chip strong { color: #f7f5ec; }
+.experience-chip p { color: #c1d0c4; }
+.experience-chip button { color: #d9dfd4; }
+.interview-card .interview-idle { padding-top: 22px; }
+.interview-card .interview-idle h3 { color: #f7f6ed; font: 500 16px/1.5 "Noto Serif SC", "Songti SC", serif; margin: 5px 0 6px; }
+.interview-card .interview-idle p { max-width: 340px; margin: 0 auto 15px; font-size: 11px; line-height: 1.75; }
+.memory-cues { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; margin: 0 auto 16px; max-width: 400px; }
+.memory-cues button, .question-prompts button {
+  border: 1px solid rgba(231, 236, 219, .34);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(247, 246, 232, .08);
+  color: #e8eadf;
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.memory-cues button:hover, .question-prompts button:hover { background: rgba(247, 246, 232, .16); border-color: rgba(231, 236, 219, .65); transform: translateY(-1px); }
+.interview-progress { display: flex; align-items: center; justify-content: space-between; color: #cbd6c7; font-size: 10px; }
+.interview-progress span:last-child { color: #ead19a; font-variant-numeric: tabular-nums; }
+.progress-track { height: 3px; margin: 9px 0 16px; background: rgba(239, 241, 224, .16); border-radius: 99px; overflow: hidden; }
+.progress-track span { display: block; width: 0; height: 100%; border-radius: inherit; background: #ead19a; transition: width .25s ease; }
+.selected-memory { display: inline-block; margin: 0 0 8px; padding: 5px 8px; border: 1px solid rgba(231, 236, 219, .2); border-radius: 5px; color: #f0dcae; background: rgba(255,255,255,.06); font-size: 10px; }
+.interview-active h3 { margin-top: 2px; }
+.question-prompts { margin: 0 0 11px; }
+.question-prompts > span { display: block; margin-bottom: 7px; color: #c1cec0; font-size: 9px; }
+.question-prompts > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.question-prompts button { padding: 6px 9px; color: #e1e5d9; font-size: 9px; }
+.interview-card .interview-active textarea { min-height: 88px; }
+.interview-card .interview-active textarea::placeholder { color: #a2aaa1; }
+
+.profile-card { min-height: 326px; padding: 23px 22px; background: #fbfaf5; }
+.profile-card .section-desc { color: #83897e; line-height: 1.75; }
+.profile-group { border-top-color: #ece9df; }
+.profile-group h3 { color: #45564a; }
+.skill-tag, .empty-tag { border-radius: 5px; padding: 7px 9px; }
+.skill-tag { border-color: #d7e1d5; background: #edf2e9; color: #42644a; }
+.skill-tag.pending { border-style: dashed; border-color: #d9c8a5; background: #faf4e6; color: #80683f; }
+.skill-tag.explore { border-color: #e5e4dc; background: #f2f1eb; color: #8b8b7e; }
+.need-item { border: 1px solid #eee4d3; border-radius: 6px; background: #faf5ea; }
+.need-item strong { color: #806440; }
+.profile-footer { color: #97988b; }
+
+.resume-section { margin-top: 17px; padding: 22px 24px; background: #fffefa; }
+.resume-section .section-desc { margin-top: 9px; color: #838b80; }
+.resume-section .primary-button, .resume-dialog .primary-button { border-color: #315c47; background: #315c47; border-radius: 6px; }
+.resume-section .primary-button:hover, .resume-dialog .primary-button:hover { border-color: #274b39; background: #274b39; }
+.resume-icon { border-color: #deded1; border-radius: 4px 9px 9px 4px; background: #f2f0e8; color: #54705b; }
+.resume-teaser { border-color: #ece9df; }
+footer { color: #93978d; }
+
+.resume-dialog { border-radius: 14px; background: #f6f4ed; }
+.dialog-head { background: rgba(246, 244, 237, .96); border-color: #e7e4da; }
+.editor-block { border-color: #e9e6dc; border-radius: 9px; }
+.preview-wrap { border-radius: 8px; }
+.resume-paper { border-radius: 2px; }
+.small-dialog { border-radius: 13px; }
+
+@media (max-width: 1080px) {
+  .workspace { padding-inline: 25px; }
+  .layout { grid-template-columns: 195px minmax(0, 1fr); }
+  .sidebar { padding-inline: 21px 15px; }
+}
+
+@media (max-width: 760px) {
+  .topbar { height: 64px; padding-inline: 16px; }
+  .workspace { padding: 25px 15px 20px; }
+  .workspace h1 { margin-top: 19px; font-size: 29px; }
+  .intro { margin-bottom: 23px; }
+  .goal-card, .interview-card, .profile-card, .resume-section { border-radius: 11px; }
+  .goal-card { padding: 20px 17px; }
+  .content-grid { gap: 12px; margin-top: 12px; }
+  .interview-card { min-height: 300px; padding: 20px 18px; }
+  .memory-cues { gap: 6px; }
+  .memory-cues button { padding: 7px 9px; }
+  .profile-card { padding: 20px 18px; }
+  .resume-section { margin-top: 12px; padding: 19px 17px; }
+}
+
+@media print {
+  body { background: #fff; }
+  .resume-dialog { border-radius: 0; }
+}

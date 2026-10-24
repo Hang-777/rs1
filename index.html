@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="适用于不同专业与求职方向的 AI 简历助手。从真实经历开始，整理可验证的能力与简历表达。">
+  <meta name="theme-color" content="#f7f7f3"><title>闻简 · 通用 AI 简历助手</title><link rel="stylesheet" href="./styles.css"><link rel="stylesheet" href="./polish.css">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#"><span class="brand-mark">闻</span><span>闻简<small>让经历慢慢说话</small></span></a><div class="top-actions"><span id="modeBadge" class="mode-badge">检查 AI 模式…</span><button id="privacyBtn" class="quiet-button">隐私说明</button></div></header>
+  <main class="layout">
+  <aside class="sidebar">
+      <div class="side-heading">你的简历工作台 <span>✳</span></div>
+      <div class="steps" id="steps"><div class="step active"><i>01</i><span>找到目标方向</span></div><div class="step"><i>02</i><span>聊聊你的经历</span></div><div class="step"><i>03</i><span>整理优势档案</span></div><div class="step"><i>04</i><span>生成一份简历</span></div></div>
+      <div class="sidebar-note"><span>✦</span><p>不限制专业，也不要求先有“厉害的履历”。从真实做过的小事开始，把你能证明的价值讲清楚。</p></div>
+      <div class="privacy-mini"><span>🔒</span> 每台设备独立保存资料</div>
+    </aside>
+    <section class="workspace">
+      <div class="welcome-line"><span>你好，先从一个方向开始</span><span id="saveState">自动保存已开启</span></div>
+      <h1>你的经历，值得被好好看见。</h1><p class="intro">适用于不同专业与求职方向。通过一场轻松的对话，找出你做过的事、解决过的问题，以及可迁移到目标岗位的能力。</p>
+      <div class="goal-card"><div class="section-head"><div><span class="eyebrow">STEP 01 · 选择方向</span><h2>你最近在关注什么工作？</h2></div><span class="head-icon">↗</span></div><p class="section-desc">选择一个接近的方向，或输入具体岗位；还没想好也可以先从经历开始。</p><div class="job-grid" id="jobs"></div><label class="custom-label" for="customJob">也可以写下具体岗位</label><input id="customJob" class="text-input" placeholder="例如：产品助理、数据分析、护理、机械设计……" maxlength="50"></div>
+      <div class="content-grid">
+        <section class="interview-card"><div class="section-head"><div><span class="eyebrow">STEP 02 · 轻松聊聊</span><h2>从一件小事开始</h2></div><span id="interviewCount" class="count-pill">还没开始</span></div>
+          <div id="interviewIdle" class="interview-idle"><div class="sparkle">✳</div><h3>先从一个熟悉的场景回忆</h3><p>不必是实习。课程项目、打工、科研竞赛、家庭事务、兴趣作品或生活中的小问题都可以。</p><div class="memory-cues"><button data-start-cue="课程或团队项目">课程 / 项目</button><button data-start-cue="实习、兼职或正式工作">实习 / 工作</button><button data-start-cue="社团、志愿服务或公共事务">社团 / 服务</button><button data-start-cue="竞赛、科研或实验">竞赛 / 科研</button><button data-start-cue="自己完成的一件作品">个人作品</button><button data-start-cue="帮人解决过的一个问题">解决问题</button></div><button id="startInterview" class="primary-button">从其他事情开始 <span>→</span></button></div>
+          <div id="interviewActive" class="interview-active hidden"><div class="interview-progress"><span id="questionNumber"></span><span id="progressLabel"></span></div><div class="progress-track"><span id="progressFill"></span></div><p id="selectedMemory" class="selected-memory hidden"></p><h3 id="questionText"></h3><p id="questionHint" class="question-hint"></p><div id="questionPrompts" class="question-prompts"></div><label class="sr-only" for="answer">你的回答</label><textarea id="answer" rows="4" maxlength="1000" placeholder="可以先写一句不完整的话"></textarea><div class="answer-foot"><span id="answerCount">0 / 1000</span><div><button id="skipQuestion" class="quiet-button">跳过这题</button><button id="submitAnswer" class="primary-button">继续 <span>→</span></button></div></div></div>
+          <div id="interviewDone" class="interview-done hidden"><div class="sparkle">✓</div><h3>这段经历已经有了自己的样子。</h3><p>可以再聊一件事，也可以先去看看你的优势档案。</p><button id="addExperience" class="outline-button">聊聊另一件事 <span>＋</span></button></div>
+          <div id="experienceList" class="experience-list"></div>
+        </section>
+        <section class="profile-card"><div class="section-head"><div><span class="eyebrow">STEP 03 · 逐渐清晰</span><h2>你的优势档案</h2></div><span class="head-icon warm">✳</span></div><p class="section-desc">能力判断来自你分享的经历；不确定的部分由你来确认。</p><div class="profile-group"><h3><span class="dot green"></span>经历中的线索 · 待你确认</h3><div id="evidencedSkills" class="skill-list"><span class="empty-tag">聊过一段经历后，这里会慢慢出现线索</span></div></div><div class="profile-group"><h3><span class="dot amber"></span>可以补充证据</h3><div id="needsEvidence" class="needs-list"><p class="muted-empty">再多一个具体行动或作品细节，简历会更有说服力。</p></div></div><div class="profile-group"><h3><span class="dot blue"></span>还可以继续挖掘</h3><div id="emergingSkills" class="skill-list"></div></div><div class="profile-footer">✧ 所有能力推断都只是线索，你可以随时修改或忽略。</div></section>
+      </div>
+      <section class="resume-section"><div class="section-head"><div><span class="eyebrow">STEP 04 · 整理与呈现</span><h2>让经历成为一份简历</h2></div><button id="openResume" class="primary-button">编辑与预览 <span>→</span></button></div><p class="section-desc">从真实信息出发，试试岗位化表达。每一条 AI 建议都可以确认、修改或拒绝。</p><div class="resume-teaser"><div class="resume-icon">文</div><div><strong id="resumeNameTeaser">一份属于你的简历</strong><span id="resumeTeaserInfo">选择岗位、分享经历，即可开始整理</span></div><button id="teaserEdit" class="quiet-button">去编辑 ↗</button></div></section>
+      <footer>闻简 · 适用于不同专业与求职方向 <span>各自设备上的资料互不共享</span></footer>
+    </section>
+  </main>
+  <dialog id="resumeDialog" class="resume-dialog"><div class="dialog-head"><div><span class="eyebrow">你的简历草稿</span><h2>编辑与预览</h2></div><button class="icon-button" data-close="resumeDialog" aria-label="关闭">×</button></div><div class="resume-toolbar"><div class="template-switch"><button data-template="classic" class="template-button active">简洁经典</button><button data-template="editorial" class="template-button">作品导向</button></div><button id="printResume" class="primary-button">导出 A4 PDF <span>↓</span></button></div>
+    <div class="resume-layout"><div class="resume-editor"><div class="editor-block"><h3>基本信息</h3><div class="form-grid"><label>姓名<input id="resumeName" placeholder="你的姓名" maxlength="30"></label><label>联系方式<input id="resumeContact" placeholder="手机 / 邮箱" maxlength="80"></label><label class="full">求职意向<input id="resumeRole" placeholder="例如：产品助理、数据分析、平面设计、护士"></label><label class="full">个人简介<textarea id="resumeSummary" rows="3" maxlength="260" placeholder="概括你的专业背景、相关技能和求职方向，可留空"></textarea></label><label class="full">教育背景<input id="resumeEducation" placeholder="学校、专业、就读时间，可留空" maxlength="160"></label></div></div><div class="editor-block"><div class="edit-section-head"><h3>经历与建议</h3><button id="optimizeBtn" class="outline-button">✦ 整理简历表达</button></div><p id="aiNotice" class="ai-notice">建议仅依据已填写内容生成，所有 AI 表述均需由你确认后才会进入简历。</p><div id="resumeItems" class="resume-items"></div></div></div><div class="preview-wrap"><div id="resumePreview" class="resume-paper classic"></div></div></div>
+  </dialog>
+  <dialog id="privacyDialog" class="small-dialog"><button class="icon-button dialog-close" data-close="privacyDialog" aria-label="关闭">×</button><span class="eyebrow">关于你的信息</span><h2>先把边界说清楚</h2><ul><li>这是可分享的通用网页，不需要注册。每位使用者的数据仅保存在自己当前设备的浏览器中，不会上传到网站存储。</li><li>请勿多人共用同一个浏览器配置；同一设备、同一浏览器里的使用者会看到同一份本地草稿。</li><li>未连接站点 AI 服务时，建议由浏览器本地生成，不会发送你的经历内容。</li><li>站点启用 AI 后，点击整理会把所选经历发送至站点配置的 AI 服务；请先了解对方的数据政策。</li><li>你可以删除单条经历、修改任何文字，也可以拒绝全部优化建议。</li><li>导出 PDF 由浏览器打印功能完成，请在打印窗口选择“另存为 PDF”。</li></ul><button class="outline-button" id="clearData">清除本机全部数据</button></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div><script src="./app.js"></script>
+</body></html>
