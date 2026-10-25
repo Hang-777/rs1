@@ -91,9 +91,9 @@ function showQuestion() {
   const selected = $('#selectedMemory');
   if (n === 1 && state.interview.cue) { selected.textContent = `从这个场景开始回忆：${state.interview.cue}`; selected.classList.remove('hidden'); }
   else selected.classList.add('hidden');
-  $('#answer').value = '';
+  $('#answer').value = state.interview.draft || ''; 
   $('#answer').placeholder = n === 1 ? '比如：有一次……（用你自己的真实情况补完）' : '先写一两句就好，不需要一次说完整。';
-  $('#answerCount').textContent = '0 / 1000';
+  $('#answerCount').textContent = `${$('#answer').value.length} / 1000`; 
   $('#submitAnswer').innerHTML = n === QUESTIONS.length ? '完成这段经历 <span>✓</span>' : '继续 <span>→</span>';
   activeView('interviewActive');
 }
@@ -111,7 +111,7 @@ function submitAnswer(skip = false) {
   const value = $('#answer').value.trim(); const qid = state.interview.question;
   if (!skip && !value) { toast('写下一点想到的内容，或者跳过这个问题。'); return; }
   if (value) exp[qid] = value;
-  state.interview.asked.push(qid);
+  state.interview.draft = ''; state.interview.asked.push(qid);
   if (qid === 'proud') state.interview.cue = '';
   if (qid === 'proud' && value) exp.title = value.slice(0, 32);
   save(); showQuestion();
@@ -122,11 +122,11 @@ function renderResumeItems() {
     return `<article class="resume-item"><div class="resume-item-top"><strong>${esc(e.title || '一段经历')}</strong><button class="text-danger" data-delete-exp="${esc(e.id)}">删除</button></div><p class="source-line">你的原始信息 · ${esc([e.role, e.steps, e.proof].filter(Boolean).join('；') || e.proud || '尚未填写')}</p><details class="fact-editor"><summary>编辑这段经历和证据</summary>${[['proud','事情本身'],['role','我的角色'],['steps','采取的行动'],['challenge','遇到的情况'],['proof','证据或完成情况'],['learning','自己的感受']].map(([key,label]) => `<label>${label}<textarea data-fact="${esc(e.id)}" data-fact-key="${key}" rows="2" maxlength="1000">${esc(e[key] || '')}</textarea></label>`).join('')}</details>${suggestion ? `<div class="suggestion-box"><div class="suggestion-label">✦ AI 建议 · ${esc(suggestion.skill)}</div><p>${esc(suggestion.suggestion)}</p><small>${esc(suggestion.reason || '')}</small><div class="suggestion-actions"><button class="primary-button compact" data-accept="${esc(e.id)}">确认采用</button><button class="outline-button compact" data-edit-suggestion="${esc(e.id)}">修改后采用</button><button class="quiet-button compact" data-reject="${esc(e.id)}">拒绝</button></div></div>` : ''}<label class="resume-copy-label">简历表述（由你确认）<textarea data-resume-text="${esc(e.id)}" rows="3" maxlength="500" placeholder="填写你希望放进简历的真实描述${e.resumeText ? '' : '，或先留空'}">${esc(e.resumeText)}</textarea></label></article>`;
   }).join('') : '<div class="empty-resume">目前还没有经历。回到主页聊一件你做过的小事，随时都可以回来。</div>';
 }
-function renderPreview() {
-  const r = state.resume, role = r.role || jobName(), exps = state.experiences.filter(e => e.resumeText);
+function renderPreview(r = state.resume, experiences = state.experiences, target = "#resumePreview") {
+  const role = r.role || jobName(), exps = experiences.filter(e => e.resumeText);
   const template = r.template === 'editorial' ? 'editorial' : 'classic';
-  $('#resumePreview').className = `resume-paper ${template}`;
-  $('#resumePreview').innerHTML = `<header class="paper-header"><div><div class="paper-name">${esc(r.name || '你的姓名')}</div><div class="paper-role">${esc(role)}</div></div><div class="paper-contact">${esc(r.contact || '联系方式')}</div></header>${r.summary ? `<section class="paper-section"><h3>个人简介</h3><p>${esc(r.summary)}</p></section>` : ''}<section class="paper-section"><h3>求职意向</h3><p>${esc(role)}</p></section>${exps.length ? `<section class="paper-section"><h3>实践经历</h3>${exps.map(e => `<article class="paper-exp"><strong>${esc(e.title || '实践经历')}</strong><p>${esc(e.resumeText)}</p></article>`).join('')}</section>` : ''}${r.education ? `<section class="paper-section"><h3>教育背景</h3><p>${esc(r.education)}</p></section>` : ''}<div class="paper-foot">所有经历与描述均由本人确认</div>`;
+  $(target).className = `resume-paper ${template}`;
+  $(target).innerHTML = `<header class="paper-header"><div><div class="paper-name">${esc(r.name || '你的姓名')}</div><div class="paper-role">${esc(role)}</div></div><div class="paper-contact">${esc(r.contact || '联系方式')}</div></header>${r.summary ? `<section class="paper-section"><h3>个人简介</h3><p>${esc(r.summary)}</p></section>` : ''}<section class="paper-section"><h3>求职意向</h3><p>${esc(role)}</p></section>${exps.length ? `<section class="paper-section"><h3>实践经历</h3>${exps.map(e => `<article class="paper-exp"><strong>${esc(e.title || '实践经历')}</strong><p>${esc(e.resumeText)}</p></article>`).join('')}</section>` : ''}${r.education ? `<section class="paper-section"><h3>教育背景</h3><p>${esc(r.education)}</p></section>` : ''}<div class="paper-foot">所有经历与描述均由本人确认</div>`;
 }
 function openResume() {
   $('#resumeName').value = state.resume.name; $('#resumeContact').value = state.resume.contact; $('#resumeRole').value = state.resume.role || jobName(); $('#resumeSummary').value = state.resume.summary; $('#resumeEducation').value = state.resume.education || '';
@@ -192,14 +192,3 @@ async function init() {
 }
 init();
 
-// The archive is a navigation layer; all editing continues in the original workspace.
-function enterArchiveRoom(room) {
-  if (room === 'home') { document.body.classList.add('archive-home'); window.scrollTo(0, 0); return; }
-  document.body.classList.remove('archive-home');
-  if (room === 'resume') { openResume(); return; }
-  const target = document.querySelector({goal:'.goal-card', interview:'.interview-card', profile:'.profile-card'}[room] || '.workspace');
-  target.scrollIntoView({block:'start', behavior:'instant'});
-  target.setAttribute('tabindex','-1'); target.focus({preventScroll:true});
-}
-document.querySelectorAll('[data-room]').forEach(button => button.addEventListener('click', () => enterArchiveRoom(button.dataset.room)));
-document.querySelector('.brand').addEventListener('click', event => { event.preventDefault(); enterArchiveRoom('home'); });
