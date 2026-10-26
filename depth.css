@@ -20,3 +20,10 @@
  @media(max-width:760px){.studio-guide-intro{align-items:stretch;flex-direction:column;gap:12px}.studio-guide-intro h2{font-size:21px}.blank-guide{padding:16px}.blank-dialog{padding:20px}.blank-dialog .record-actions{flex-direction:column}#guidedStudioExperience{margin-left:0}.resume-editor .editor-block{padding:15px}}
 }
 @media print{.blank-guide,.studio-guide-intro,#studioBlankDialog{display:none!important}}
+@media screen {
+ body .primary-button.primary-button{background:#c8d7b5!important;border-color:#c8d7b5!important;color:#182111!important}
+ body .primary-button.primary-button:hover{background:#e0ebd2!important;color:#121b0d!important}
+ body .primary-button.primary-button span{color:inherit!important}
+ body .interview-active h3,body #questionText,body .interview-done h3{color:#e0ead5}
+ body .interview-progress,body .answer-foot,body .question-prompts>span{color:#aebd9f}
+}
