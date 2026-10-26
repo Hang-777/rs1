@@ -8,7 +8,7 @@
   --green-soft: #ececec;
   --orange: #b76d4c;
   --orange-soft: #f4e8dc;
-  --shadow: 0 12px 36px rgba(47, 56, 45, .07);
+  --shadow: 0 12px 36px rgba(53,53,53, .07);
 }
 
 body {
@@ -34,7 +34,7 @@ body {
   height: 39px;
   border-radius: 13px 13px 13px 4px;
   background: var(--green);
-  box-shadow: 0 4px 9px rgba(49, 92, 71, .15);
+  box-shadow: 0 4px 9px rgba(81,81,81, .15);
 }
 .mode-badge { background: #fffefa; border-color: #e7e5da; padding: 7px 12px; }
 
@@ -50,7 +50,7 @@ body {
 .step { gap: 11px; padding: 10px 7px; font-size: 12px; }
 .step i { border-color: #e2e2e2; background: #f8f7f2; }
 .step.active { color: #4e4e4e; }
-.step.active i { box-shadow: 0 0 0 4px rgba(63, 107, 79, .09); }
+.step.active i { box-shadow: 0 0 0 4px rgba(96,96,96, .09); }
 .sidebar-note {
   position: relative;
   margin-top: 48px;
@@ -87,7 +87,7 @@ body {
 .goal-card, .interview-card, .profile-card, .resume-section {
   border: 1px solid #e9e6dc;
   border-radius: 13px;
-  box-shadow: 0 9px 28px rgba(48, 54, 43, .045);
+  box-shadow: 0 9px 28px rgba(52,52,52, .045);
 }
 .goal-card { padding: 24px 25px 22px; background: rgba(255, 254, 250, .93); }
 .section-head h2, .dialog-head h2 {
@@ -111,8 +111,8 @@ body {
   font-size: 11px;
   transition: transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease;
 }
-.job-button:hover { transform: translateY(-1px); border-color: #b9b9b9; box-shadow: 0 4px 12px rgba(49, 76, 54, .06); }
-.job-button.selected { border-color: #7c7c7c; background: #f0f0f0; color: #4e4e4e; box-shadow: inset 0 0 0 1px rgba(84, 120, 84, .12); }
+.job-button:hover { transform: translateY(-1px); border-color: #b9b9b9; box-shadow: 0 4px 12px rgba(69,69,69, .06); }
+.job-button.selected { border-color: #7c7c7c; background: #f0f0f0; color: #4e4e4e; box-shadow: inset 0 0 0 1px rgba(110,110,110, .12); }
 .custom-label { margin-top: 17px; color: #868686; }
 .text-input { background: #fffefa; border-color: #e9e7dd; border-radius: 7px; padding: 11px 12px; }
 .text-input::placeholder, textarea::placeholder, .form-grid input::placeholder { color: #b3b3b3; }
@@ -123,14 +123,14 @@ body {
   padding: 23px 24px;
   border-color: #515151;
   background:
-    radial-gradient(ellipse at 100% 0%, rgba(152, 174, 133, .22), transparent 15rem),
+    radial-gradient(ellipse at 100% 0%, rgba(166,166,166, .22), transparent 15rem),
     linear-gradient(145deg, #515151, #434343 80%);
   color: #f9f7ef;
-  box-shadow: 0 14px 32px rgba(41, 76, 60, .16);
+  box-shadow: 0 14px 32px rgba(67,67,67, .16);
 }
 .interview-card .eyebrow { color: #c8c8c8; }
 .interview-card .section-head h2, .interview-card .interview-active h3, .interview-card .interview-done h3 { color: #fbf9f1; }
-.interview-card .count-pill { border-color: rgba(239, 241, 224, .22); color: #e2e2e2; background: rgba(255,255,255,.055); }
+.interview-card .count-pill { border-color: rgba(239,239,239, .22); color: #e2e2e2; background: rgba(255,255,255,.055); }
 .interview-card .sparkle { background: rgba(255, 255, 255, .12); color: #ebd39a; }
 .interview-idle { padding-top: 30px; }
 .interview-idle p, .interview-done p { color: #dbdbdb; line-height: 2; }
@@ -139,10 +139,10 @@ body {
   background: #ead19a;
   color: #3e3e3e;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(20, 37, 25, .11);
+  box-shadow: 0 4px 12px rgba(33,33,33, .11);
 }
 .interview-card .primary-button:hover { border-color: #f3dfb4; background: #f3dfb4; }
-.interview-card .outline-button { border-color: rgba(237, 239, 222, .55); background: transparent; color: #f1f0e6; }
+.interview-card .outline-button { border-color: rgba(237,237,237, .55); background: transparent; color: #f1f0e6; }
 .interview-card .outline-button:hover { background: rgba(255,255,255,.09); }
 .interview-card .question-number, .interview-card .question-hint { color: #cecece; }
 .interview-card .interview-active textarea {
@@ -165,7 +165,7 @@ body {
 .interview-card .interview-idle p { max-width: 340px; margin: 0 auto 15px; font-size: 11px; line-height: 1.75; }
 .memory-cues { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; margin: 0 auto 16px; max-width: 400px; }
 .memory-cues button, .question-prompts button {
-  border: 1px solid rgba(231, 236, 219, .34);
+  border: 1px solid rgba(234,234,234, .34);
   border-radius: 999px;
   padding: 7px 10px;
   background: rgba(247, 246, 232, .08);
@@ -175,12 +175,12 @@ body {
   cursor: pointer;
   transition: background .15s ease, border-color .15s ease, transform .15s ease;
 }
-.memory-cues button:hover, .question-prompts button:hover { background: rgba(247, 246, 232, .16); border-color: rgba(231, 236, 219, .65); transform: translateY(-1px); }
+.memory-cues button:hover, .question-prompts button:hover { background: rgba(247, 246, 232, .16); border-color: rgba(234,234,234, .65); transform: translateY(-1px); }
 .interview-progress { display: flex; align-items: center; justify-content: space-between; color: #d3d3d3; font-size: 10px; }
 .interview-progress span:last-child { color: #ead19a; font-variant-numeric: tabular-nums; }
-.progress-track { height: 3px; margin: 9px 0 16px; background: rgba(239, 241, 224, .16); border-radius: 99px; overflow: hidden; }
+.progress-track { height: 3px; margin: 9px 0 16px; background: rgba(239,239,239, .16); border-radius: 99px; overflow: hidden; }
 .progress-track span { display: block; width: 0; height: 100%; border-radius: inherit; background: #ead19a; transition: width .25s ease; }
-.selected-memory { display: inline-block; margin: 0 0 8px; padding: 5px 8px; border: 1px solid rgba(231, 236, 219, .2); border-radius: 5px; color: #f0dcae; background: rgba(255,255,255,.06); font-size: 10px; }
+.selected-memory { display: inline-block; margin: 0 0 8px; padding: 5px 8px; border: 1px solid rgba(234,234,234, .2); border-radius: 5px; color: #f0dcae; background: rgba(255,255,255,.06); font-size: 10px; }
 .interview-active h3 { margin-top: 2px; }
 .question-prompts { margin: 0 0 11px; }
 .question-prompts > span { display: block; margin-bottom: 7px; color: #cacaca; font-size: 9px; }
