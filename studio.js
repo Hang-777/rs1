@@ -5,9 +5,9 @@ if (!Array.isArray(state.resume.items)) state.resume.items=state.experiences.fil
 state.resume.advantages=Array.isArray(state.resume.advantages)?state.resume.advantages:[];
 const STUDIO_TEMPLATES=[
  {id:'classic',name:'留白经典',tag:'克制 · 清晰',description:'宽阔留白与细线分区，适合通用求职。'},
- {id:'editorial',name:'人文编辑',tag:'衬线 · 温润',description:'衬线姓名与暖棕细节，适合内容与创意表达。'},
+ {id:'editorial',name:'人文编辑',tag:'衬线 · 编辑',description:'衬线标题与细线分隔，适合内容与教育方向。'},
  {id:'executive',name:'商务序列',tag:'深墨 · 秩序',description:'墨色抬头、编号章节，突出结构与职业经历。'},
- {id:'modern',name:'蓝图',tag:'蓝调 · 现代',description:'蓝色边栏与清晰的信息层级，适合技术与项目展示。'}
+ {id:'modern',name:'理性网格',tag:'网格 · 现代',description:'中性灰阶与结构化信息表，适合技术与项目展示。'}
 ];
 const gallery=document.createElement('section');gallery.className='studio-gallery';
 gallery.innerHTML=STUDIO_TEMPLATES.map(t=>`<button class="template-card" data-studio-template="${t.id}" aria-label="选择${t.name}模板"><div class="template-mini ${t.id}" aria-hidden="true"><div class="mini-header"><b>YOUR NAME</b><span>YOUR NEXT CHAPTER</span></div><div class="mini-section"><i></i><em></em><em></em></div><div class="mini-section"><i></i><em></em><em></em><em></em></div><div class="mini-section"><i></i><em></em><em></em></div></div><div class="template-caption"><span>${t.tag}</span><h2>${t.name} <b>↗</b></h2><p>${t.description}</p></div></button>`).join('');
@@ -47,10 +47,27 @@ renderResumeItems=function(){
  $('#resumeItems').innerHTML=state.resume.items.length?state.resume.items.map(item=>`<article class="resume-item studio-experience" data-item="${esc(item.id)}"><div class="resume-item-top"><strong>个人经历</strong><button class="quiet-button" data-remove-studio="${esc(item.id)}">从本简历移除</button></div><div class="form-grid">${[['title','经历名称'],['company','公司 / 组织'],['position','岗位 / 职责'],['period','起止时间']].map(([key,label])=>`<label>${label}<input data-item-field="${key}" maxlength="80" value="${esc(item[key]||'')}" placeholder="${label}"></label>`).join('')}</div><label class="resume-copy-label">个人经历描述<textarea data-item-field="resumeText" maxlength="2000" rows="5" placeholder="填写实际职责、行动与结果">${esc(item.resumeText||'')}</textarea></label></article>`).join(''):'<p class="empty-resume">直接新增经历，或从个人履历中勾选调用。</p>';
  $('#studioAdvantages').innerHTML=state.resume.advantages.length?state.resume.advantages.map(a=>`<article class="studio-strength" data-strength="${esc(a.id)}"><strong>${esc(a.title)}</strong><label>用于这份简历的优势表述<textarea data-strength-copy rows="3" maxlength="1500">${esc(a.text)}</textarea></label><button class="quiet-button" data-remove-strength="${esc(a.id)}">从本简历移除</button></article>`).join(''):'<p class="section-desc">点击“调用已确认优势”选择需要展示的内容。</p>';
 };
+function paperInfoRows(r){
+ const rows=[['求职方向',r.role],['联系方式',r.contact],['教育背景',r.education]];
+ const parts=String(r.summary||'').split('；').map(x=>x.trim()).filter(Boolean);
+ const labels={'背景':'专业背景','相关经历':'经历概览','能够完成':'核心技能','希望从事':'职业意向'};
+ const structured=parts.length>0&&parts.every(x=>/^(背景|相关经历|能够完成|希望从事)：/.test(x));
+ if(structured)for(const part of parts){const split=part.indexOf('：'),key=part.slice(0,split),value=part.slice(split+1).trim();if(value&&!(key==='希望从事'&&value===String(r.role||'').trim()))rows.push([labels[key],value]);}
+ return {rows:rows.filter(([,value])=>String(value||'').trim()),summary:structured?'':String(r.summary||'').trim()};
+}
+function paperExperienceCopy(text){
+ const parts=String(text||'').split(/；(?=主要承担：|具体做法：|可确认的结果：)/);
+ if(parts.length>1&&parts.every(x=>/^(主要承担|具体做法|可确认的结果)：/.test(x)))return '<ul class="paper-bullets">'+parts.map(x=>'<li>'+esc(x.replace(/^(主要承担|具体做法|可确认的结果)：/,''))+'</li>').join('')+'</ul>';
+ return '<p>'+esc(text)+'</p>';
+}
 renderPreview=function(r=state.resume,experiences=r.items||state.experiences,target='#resumePreview'){
- const t=STUDIO_TEMPLATES.some(x=>x.id===r.template)?r.template:'classic';const exps=experiences.filter(e=>e.resumeText?.trim());
+ const t=STUDIO_TEMPLATES.some(x=>x.id===r.template)?r.template:'classic',exps=experiences.filter(e=>e.resumeText?.trim()),info=paperInfoRows(r);
  $(target).className='resume-paper '+t;
- $(target).innerHTML=`<header class="paper-header"><div><div class="paper-name">${esc(r.name||'你的姓名')}</div><div class="paper-role">${esc(r.role||'求职方向')}</div></div><div class="paper-contact">${esc(r.contact||'联系方式')}</div></header><div class="paper-body">${r.summary?`<section class="paper-section"><h3>个人简介</h3><p>${esc(r.summary)}</p></section>`:''}${r.education?`<section class="paper-section"><h3>教育背景</h3><p>${esc(r.education)}</p></section>`:''}${exps.length?`<section class="paper-section"><h3>个人经历</h3>${exps.map(e=>`<article class="paper-exp"><div class="paper-exp-heading"><strong>${esc(e.title||e.company||'个人经历')}</strong><small>${esc(e.period||'')}</small></div>${e.company||e.position?`<div class="paper-job">${esc([e.company,e.position].filter(Boolean).join(' / '))}</div>`:''}<p>${esc(e.resumeText)}</p></article>`).join('')}</section>`:''}${r.advantages?.length?`<section class="paper-section"><h3>个人优势</h3>${r.advantages.map(a=>`<article class="paper-exp"><strong>${esc(a.title)}</strong><p>${esc(a.text)}</p></article>`).join('')}</section>`:''}</div>`;
+ $(target).innerHTML='<header class="paper-header"><div><span class="paper-kicker">CURRICULUM VITAE / 个人简历</span><div class="paper-name">'+esc(r.name||'你的姓名')+'</div></div></header><div class="paper-body">'+
+ (info.rows.length?'<section class="paper-section paper-profile"><h3>个人信息</h3><table class="paper-info-table" aria-label="个人信息"><tbody>'+info.rows.map(([label,value])=>'<tr><th scope="row">'+esc(label)+'</th><td>'+esc(value)+'</td></tr>').join('')+'</tbody></table></section>':'')+
+ (info.summary?'<section class="paper-section"><h3>个人简介</h3><p>'+esc(info.summary)+'</p></section>':'')+
+ (exps.length?'<section class="paper-section"><h3>经历与实践</h3>'+exps.map(e=>'<article class="paper-exp"><div class="paper-exp-heading"><strong>'+esc(e.title||e.company||'个人经历')+'</strong><small>'+esc(e.period||'')+'</small></div>'+((e.company||e.position)?'<div class="paper-job">'+esc([e.company,e.position].filter(Boolean).join(' / '))+'</div>':'')+paperExperienceCopy(e.resumeText)+'</article>').join('')+'</section>':'')+
+ (r.advantages?.length?'<section class="paper-section"><h3>能力与优势</h3>'+r.advantages.map(a=>'<article class="paper-exp"><strong>'+esc(a.title)+'</strong><p>'+esc(a.text)+'</p></article>').join('')+'</section>':'')+'</div>';
 };
 openResume=function(){for(const [el,key] of [['resumeName','name'],['resumeContact','contact'],['resumeRole','role'],['resumeSummary','summary'],['resumeEducation','education']])$('#'+el).value=state.resume[key]||'';markStudioTemplate();renderResumeItems();renderPreview();if(!editor.open)editor.showModal();};
 $('#openResume').onclick=openResume;$('#teaserEdit').onclick=openResume;
